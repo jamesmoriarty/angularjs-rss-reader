@@ -1,3 +1,4 @@
+// taken from Adam Webber - http://jsfiddle.net/niden/86L5p/ but added pure javascript show/hide.
 angular.module('SharedServices', [])
   .config(function ($httpProvider) {
       $httpProvider.responseInterceptors.push('myHttpInterceptor');
@@ -13,10 +14,7 @@ angular.module('SharedServices', [])
           return promise.then(function (response) {
               document.getElementById('loading').style.display = 'none'; // hide
               return response;
-
           }, function (response) {
-              // do something on error
-              // todo hide the spinner
               document.getElementById('loading').style.display = 'none'; // hide
               return $q.reject(response);
           });
@@ -32,6 +30,7 @@ config(function($routeProvider) {
 
 function RssController($scope, $http) {
   $scope.rssEntries = [];
+
   $scope.fetchRss = function() {
     var requestUrl = document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&callback=JSON_CALLBACK&num=10&q=' + encodeURIComponent($scope.rssUrl);
     $http.jsonp(requestUrl).

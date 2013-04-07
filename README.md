@@ -7,7 +7,13 @@ run
 ---
 
 ```bash
-ruby app.rb
+rackup
+```
+
+OR
+
+```bash
+ruby lib/app.rb
 ```
 
 
