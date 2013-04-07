@@ -14,16 +14,50 @@ end
 __END__
 
 @@ layout
-%html(ng-app)
+%html(ng-app="rssReader")
   %head
     %meta(charset="utf-8")
     %meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1")
     %script(src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js")
 %body
+  #loading(style="display:none;")
+    Loading
   = yield
 
 @@ index
 :javascript
+  angular.module('SharedServices', [])
+    .config(function ($httpProvider) {
+        $httpProvider.responseInterceptors.push('myHttpInterceptor');
+        var spinnerFunction = function (data, headersGetter) {
+          document.getElementById('loading').style.display = ''; // show
+          return data;
+        };
+        $httpProvider.defaults.transformRequest.push(spinnerFunction);
+    })
+    // register the interceptor as a service, intercepts ALL angular ajax http calls
+    .factory('myHttpInterceptor', function ($q, $window) {
+        return function (promise) {
+            return promise.then(function (response) {
+                document.getElementById('loading').style.display = 'none'; // hide
+                return response;
+
+            }, function (response) {
+                // do something on error
+                // todo hide the spinner
+                document.getElementById('loading').style.display = 'none'; // hide
+                return $q.reject(response);
+            });
+        };
+    })
+
+  angular.module('rssReader', ['SharedServices']).
+  config(function($routeProvider) {
+    $routeProvider.
+      when('/', {controller:RssController}).
+      otherwise({redirectTo:'/'});
+  });
+
   function RssController($scope, $http) {
     $scope.rssEntries = [];
     $scope.fetchRss = function() {
@@ -41,6 +75,7 @@ __END__
       });
     };
   }
+
 :css
   // http://paulirish.com/2012/box-sizing-border-box-ftw/
   * { -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; }
@@ -119,6 +154,13 @@ __END__
   }
 
 :css
+  #loading {
+    background-color: #F00;
+    color: #FFF;
+    position: absolute;
+    top: 0;
+    padding: 5px 10px;
+  }
   body { margin: 1em; }
   body, input, textarea {
     color: #333333;
@@ -127,7 +169,7 @@ __END__
     font-weight: 300;
     line-height: 1.6em;
   }
-  form { margin: 1em 1em 5em 1em; text-align: center; }
+  form { margin: 1em; text-align: center; }
   form input[type="text"] { width: 50%; }
   form input[type="submit"] { display: inline-block; background: #FFF; }
   input { padding: 5px 10px; border-style: dotted; border-color: #333; }
@@ -139,6 +181,8 @@ __END__
   %form(ng-submit="fetchRss()")
     %input(type="text" ng-model="rssUrl" placeholder="e.g. http://digg.com/rss/top.rss")
     %input(type="submit" value="Fetch")
+
+  %hr
 
   %ul.rss-entries
     %li.rss-entry(ng-repeat="rssEntry in rssEntries")
