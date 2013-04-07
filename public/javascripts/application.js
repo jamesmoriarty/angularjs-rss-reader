@@ -29,6 +29,7 @@ config(function($routeProvider) {
 });
 
 function RssController($scope, $http) {
+  $scope.rssUrls    = [];
   $scope.rssEntries = [];
 
   $scope.fetchRss = function() {
@@ -36,15 +37,33 @@ function RssController($scope, $http) {
     $http.jsonp(requestUrl).
       success(function(data){
         if(data.responseData != null){
-          $scope.rssEntries = data.responseData.feed.entries
+          $scope.rssUrls.pushUnique($scope.rssUrl);
+          var rssEntries = data.responseData.feed.entries;
+          for(var n = 0; n < rssEntries.length; n++) {
+            $scope.rssEntries.pushUniqueBy(rssEntries[n], function(a, b){ return a.link === b.link; });
+          }
         } else {
           alert(data.responseDetails);
         };
-      }).
-      error(function(data, status, headers, config) {
-      alert("Error");
-    });
+      })
   };
 }
 
+Array.prototype.pushUnique = function (obj){
+  if(this.indexOf(obj) == -1) {
+    this.push(obj);
+    return true;
+  }
+  return false;
+}
+
+Array.prototype.pushUniqueBy = function (obj, equalityFunction){
+  for(var n = 0; n < this.length; n++) {
+    if(equalityFunction(this[n], obj)) { // contains
+      return false;
+    }
+  }
+  this.push(obj);
+  return true;
+}
 
