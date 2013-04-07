@@ -1,0 +1,20 @@
+%div(ng-controller="RssController")
+
+  %form(ng-submit="fetchRss()")
+    %input(type="text" ng-model="rssUrl" placeholder="e.g. http://digg.com/rss/top.rss")
+    %input(type="submit" value="Fetch")
+
+  %hr
+
+  %ul.rss-entries
+    %li.rss-entry(ng-repeat="rssEntry in rssEntries")
+      .header
+        %h2.title
+          %a(href="{{rssEntry.link}}")
+            {{rssEntry.title}}
+        &middot;
+        %i.published-date
+          {{rssEntry.publishedDate}}
+      .body
+        {{rssEntry.content}}
+
