@@ -6,7 +6,7 @@ angular-js-rss-reader
 features
 --------
 
-- interceptors
+- interceptor
 - timeout
 - cookieStore
 
