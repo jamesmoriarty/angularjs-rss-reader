@@ -40,7 +40,9 @@ function RssController($scope, $http, $cookieStore, $timeout) {
           $cookieStore.put("rssUrls", $scope.rssUrls)
           var rssEntries = data.responseData.feed.entries;
           for(var n = 0; n < rssEntries.length; n++) {
-            rssEntries[n].publishedDate = Date.parse(rssEntries[n].publishedDate)
+            var date = Date.parse(rssEntries[n].publishedDate)
+            if(isNaN(date)) date = Date.parse(Date());
+            rssEntries[n].publishedDate = date;
             $scope.rssEntries.pushUniqueBy(rssEntries[n], function(a, b) { return a.link === b.link; });
           }
         } else {
