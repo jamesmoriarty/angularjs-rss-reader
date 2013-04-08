@@ -28,7 +28,7 @@ angular.module('rssReader', ['ngCookies', 'SharedServices']).
       otherwise({redirectTo:'/'});
   });
 
-function RssController($scope, $http, $cookieStore) {
+function RssController($scope, $http, $cookieStore, $timeout) {
 
   // create
   $scope.create = function() {
@@ -54,13 +54,24 @@ function RssController($scope, $http, $cookieStore) {
     $cookieStore.put("rssUrls", $scope.rssUrls)
   }
 
+  $scope.onTimeout = function(){
+    refresh();
+    refreshTimeout = $timeout($scope.onTimeout, 60000);
+  }
+  var refreshTimeout = $timeout($scope.onTimeout, 60000);
+
+  // refresh
+  function refresh() {
+    $scope.rssUrls    = $cookieStore.get("rssUrls") || [];
+    $scope.rssEntries = $scope.rssEntries || [];
+    $scope.rssUrls.map(function(obj) {
+      $scope.rssUrl = obj
+      $scope.create()
+    });
+  }
+
   // initialize
-  $scope.rssUrls    = $cookieStore.get("rssUrls") || [];
-  $scope.rssEntries = [];
-  $scope.rssUrls.map(function(obj) {
-    $scope.rssUrl = obj
-    $scope.create()
-  });
+  refresh();
 
   // TODO - find where this belongs.
   $scope.feedsDisplay = 'none'
