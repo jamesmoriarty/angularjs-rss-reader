@@ -22,22 +22,16 @@ angular.module('SharedServices', [])
   })
 
 angular.module('rssReader', ['ngCookies', 'SharedServices']).
-config(function($routeProvider) {
-  $routeProvider.
-    when('/', {controller:RssController}).
-    otherwise({redirectTo:'/'});
-});
+  config(function($routeProvider) {
+    $routeProvider.
+      when('/', {controller:RssController}).
+      otherwise({redirectTo:'/'});
+  });
 
 function RssController($scope, $http, $cookieStore) {
-  $scope.feedsDisplay = 'none'
-  $scope.toggleFeeds = function() {
-    $scope.feedsDisplay === 'none' ? $scope.feedsDisplay = '' : $scope.feedsDisplay = 'none';
-  };
 
-  $scope.rssUrls    = $cookieStore.get("rssUrls") || [];
-  $scope.rssEntries = [];
-
-  $scope.fetchRss = function() {
+  // create
+  $scope.create = function() {
     var requestUrl = document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&callback=JSON_CALLBACK&num=10&q=' + encodeURIComponent($scope.rssUrl);
     $http.jsonp(requestUrl).
       success(function(data) {
@@ -54,10 +48,26 @@ function RssController($scope, $http, $cookieStore) {
       })
   };
 
+  // destroy
+  $scope.destroy = function(index) {
+    $scope.rssUrls.splice(index, 1)
+    $cookieStore.put("rssUrls", $scope.rssUrls)
+  }
+
+  // initialize
+  $scope.rssUrls    = $cookieStore.get("rssUrls") || [];
+  $scope.rssEntries = [];
   $scope.rssUrls.map(function(obj) {
     $scope.rssUrl = obj
-    $scope.fetchRss()
+    $scope.create()
   });
+
+  // TODO - find where this belongs.
+  $scope.feedsDisplay = 'none'
+  $scope.toggleFeeds = function() {
+    $scope.feedsDisplay === 'none' ? $scope.feedsDisplay = '' : $scope.feedsDisplay = 'none';
+  };
+
 }
 
 Array.prototype.pushUnique = function (obj) {
