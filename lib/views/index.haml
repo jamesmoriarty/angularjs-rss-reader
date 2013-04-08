@@ -3,10 +3,14 @@
   %form(ng-submit="fetchRss()")
     %input(type="text" ng-model="rssUrl" placeholder="e.g. http://digg.com/rss/top.rss")
     %input(type="submit" value="Fetch")
+    %a(href="javascript:void(0);" ng-click="toggleHistory()")
+      History
 
-  %ul.rss-urls
+  %ul.rss-urls(style="display: {{historyDisplay}}")
+    %hr
     %li.rss-url(ng-repeat="rssUrl in rssUrls")
       {{rssUrl}}
+
   %hr
 
   %ul.rss-entries
@@ -19,5 +23,5 @@
         %i.published-date
           {{rssEntry.publishedDate}}
       .body
-        {{rssEntry.content}}
+        {{rssEntry.contentSnippet}}
 
