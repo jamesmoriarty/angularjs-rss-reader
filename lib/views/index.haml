@@ -16,13 +16,13 @@
   %hr
 
   %ul.rss-entries
-    %li.rss-entry(ng-repeat="rssEntry in rssEntries")
+    %li.rss-entry(ng-repeat="rssEntry in rssEntries | orderBy:publishedDate")
       %h2.title
         %a(href="{{rssEntry.link}}" target="_blank")
           {{rssEntry.title}}
       &middot;
       %i.published-date
-        {{rssEntry.publishedDate}}
+        {{rssEntry.publishedDate | date:'medium' }}
       &middot;
       .body
         {{rssEntry.contentSnippet}}
