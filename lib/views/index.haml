@@ -15,13 +15,13 @@
 
   %ul.rss-entries
     %li.rss-entry(ng-repeat="rssEntry in rssEntries")
-      .header
-        %h2.title
-          %a(href="{{rssEntry.link}}" target="_blank")
-            {{rssEntry.title}}
-        &middot;
-        %i.published-date
-          {{rssEntry.publishedDate}}
+      %h2.title
+        %a(href="{{rssEntry.link}}" target="_blank")
+          {{rssEntry.title}}
+      &middot;
+      %i.published-date
+        {{rssEntry.publishedDate}}
+      &middot;
       .body
         {{rssEntry.contentSnippet}}
 

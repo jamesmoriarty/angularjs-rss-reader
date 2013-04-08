@@ -30,14 +30,12 @@ config(function($routeProvider) {
 
 function RssController($scope, $http) {
   $scope.historyDisplay = 'none'
-
   $scope.toggleHistory = function() {
     $scope.historyDisplay === 'none' ? $scope.historyDisplay = '' : $scope.historyDisplay = 'none';
   };
 
   $scope.rssUrls    = [];
   $scope.rssEntries = [];
-
   $scope.fetchRss = function() {
     var requestUrl = document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&callback=JSON_CALLBACK&num=10&q=' + encodeURIComponent($scope.rssUrl);
     $http.jsonp(requestUrl).

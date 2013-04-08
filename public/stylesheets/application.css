@@ -9,7 +9,7 @@ body { margin: 1em; }
 body, input, textarea, a {
   color: #333333;
   font-family: Georgia, Times, serif;
-  font-size: 1.35em;
+  font-size: 1.15em;
   font-weight: 300;
   line-height: 1.6em;
 }
@@ -19,7 +19,8 @@ form { margin: 1em; text-align: center; }
 form input[type="text"] { width: 50%; }
 form input[type="submit"] { display: inline-block; background: #FFF; }
 input { padding: 5px 10px; border-style: dotted; border-color: #333; }
-.rss-entry { margin-bottom: 1em; }
-.rss-entry .header h2.title { display: inline; }
-
+.rss-entry { margin-bottom: 0.5em; }
+.rss-entry h2.title { display: inline; }
+.rss-entry .body { display: inline; }
+.rss-entry .published-date { color: #666; }
 
