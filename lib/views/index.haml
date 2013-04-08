@@ -3,10 +3,10 @@
   %form(ng-submit="fetchRss()")
     %input(type="text" ng-model="rssUrl" placeholder="e.g. http://digg.com/rss/top.rss")
     %input(type="submit" value="Fetch")
-    %a(href="javascript:void(0);" ng-click="toggleHistory()")
-      History
+    %a(href="javascript:void(0);" ng-click="toggleFeeds()")
+      Feeds
 
-  %ul.rss-urls(style="display: {{historyDisplay}}")
+  %ul.rss-urls(style="display: {{feedsDisplay}}")
     %hr
     %li.rss-url(ng-repeat="rssUrl in rssUrls")
       {{rssUrl}}

@@ -21,27 +21,29 @@ angular.module('SharedServices', [])
       };
   })
 
-angular.module('rssReader', ['SharedServices']).
+angular.module('rssReader', ['ngCookies', 'SharedServices']).
 config(function($routeProvider) {
   $routeProvider.
     when('/', {controller:RssController}).
     otherwise({redirectTo:'/'});
 });
 
-function RssController($scope, $http) {
-  $scope.historyDisplay = 'none'
-  $scope.toggleHistory = function() {
-    $scope.historyDisplay === 'none' ? $scope.historyDisplay = '' : $scope.historyDisplay = 'none';
+function RssController($scope, $http, $cookieStore) {
+  $scope.feedsDisplay = 'none'
+  $scope.toggleFeeds = function() {
+    $scope.feedsDisplay === 'none' ? $scope.feedsDisplay = '' : $scope.feedsDisplay = 'none';
   };
 
-  $scope.rssUrls    = [];
+  $scope.rssUrls    = $cookieStore.get("rssUrls") || [];
   $scope.rssEntries = [];
+
   $scope.fetchRss = function() {
     var requestUrl = document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&callback=JSON_CALLBACK&num=10&q=' + encodeURIComponent($scope.rssUrl);
     $http.jsonp(requestUrl).
       success(function(data) {
         if(data.responseData != null) {
           $scope.rssUrls.pushUnique($scope.rssUrl);
+          $cookieStore.put("rssUrls", $scope.rssUrls)
           var rssEntries = data.responseData.feed.entries;
           for(var n = 0; n < rssEntries.length; n++) {
             $scope.rssEntries.pushUniqueBy(rssEntries[n], function(a, b) { return a.link === b.link; });
@@ -51,6 +53,11 @@ function RssController($scope, $http) {
         };
       })
   };
+
+  $scope.rssUrls.map(function(obj) {
+    $scope.rssUrl = obj
+    $scope.fetchRss()
+  });
 }
 
 Array.prototype.pushUnique = function (obj) {
