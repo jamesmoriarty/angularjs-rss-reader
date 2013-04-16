@@ -1,0 +1,25 @@
+#loading {
+  background-color: #F00;
+  color: #FFF;
+  position: absolute;
+  top: 0;
+  padding: 5px 10px;
+}
+body { margin: 1em; }
+body, input, textarea, a {
+  color: #333333;
+  font-family: Georgia, Times, serif;
+  font-size: 1.15em;
+  font-weight: 300;
+  line-height: 1.6em;
+}
+a { color: #477b96; }
+a:hover { text-decoration: none; }
+form { margin: 1em; text-align: center; }
+form input[type="text"] { width: 50%; }
+form input[type="submit"] { display: inline-block; background: #FFF; }
+input { padding: 5px 10px; border-style: dotted; border-color: #333; }
+.rss-entry { margin-bottom: 0.5em; }
+.rss-entry h2.title { display: inline; }
+.rss-entry .body { display: inline; }
+.rss-entry .published-date { color: #666; }

@@ -7,4 +7,4 @@
  *
  * @type {angular.Module}
  */
-var rssReader = angular.module('rssReader', []);
+var rssReader = angular.module('rssReader', ["httpSpinner"]);
