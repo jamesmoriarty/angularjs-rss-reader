@@ -11,20 +11,18 @@
     <div id='loading' style='display: none;'>
         Loading
       </div>
-      <div ng-controller='rssController'>
-        <form ng-submit='create()'>
-          <input ng-model='rssUrl' placeholder='e.g. http://digg.com/rss/top.rss' type='text'>
-          <input type='submit' value='Fetch'>
-        </form>
-        <ul class='rss-urls' style='display: {{feedsDisplay}}'>
-          <hr>
+        <div ng-controller='rssController'>
+          <ul class='rss-urls'>
+            <form ng-submit='create()'>
+              <input ng-model='rssUrl' placeholder='e.g. http://digg.com/rss/top.rss' type='text'>
+              <input type='submit' value='Add'>
+            </form>
           <li class='rss-url' ng-repeat='rssUrl in rssUrls'>
             <a href='javascript:void(0);' ng-click='destroy($index)'>remove</a>
             &middot;
             {{rssUrl}}
           </li>
         </ul>
-        <hr>
         <ul class='rss-entries'>
           <li class='rss-entry' ng-repeat='rssEntry in rssEntries | orderBy:publishedDate'>
             <h2 class='title'>
