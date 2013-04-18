@@ -102,7 +102,7 @@ a {
   width: 70%; 
 }
 
-@media (max-width: 640px) {
+@media (max-width: 800px) {
   .rss-urls, .rss-entries {
     float: clear;
     width: 98%;
