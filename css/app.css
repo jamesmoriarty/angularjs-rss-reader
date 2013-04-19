@@ -3,6 +3,7 @@
 }
 
 #loading {
+  z-index: 999;
   background-color: #F00;
   color: #FFF;
   position: absolute;
