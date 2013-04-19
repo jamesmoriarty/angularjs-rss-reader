@@ -26,7 +26,7 @@ rssReader.controller('rssController', function rssController($scope, $http, $tim
             if(isNaN(date)) date = Date.parse(Date());
             rssEntries[n].publishedDate = date;
             // add entries with unique link.
-            $scope.rssEntries.pushUniqueBy(rssEntries[n], function(a, b) { return a.link === b.link; });
+            $scope.rssEntries.pushUnique(rssEntries[n], function(a, b) { return a.link === b.link; });
           }
 
           // sort
