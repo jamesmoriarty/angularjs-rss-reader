@@ -1,31 +1,25 @@
-// taken from Adam Webber - http://jsfiddle.net/niden/86L5p/ but added pure javascript show/hide.
+// http://stackoverflow.com/a/11870892
 angular.module('httpSpinner', [])
   .config(function ($httpProvider) {
       $httpProvider.responseInterceptors.push('httpSpinnerInterceptor');
       var spinnerFunction = function (data, headersGetter) {
-        var el;
-        if(el = document.getElementById('loading')) {
-          el.style.display = ''; // show
-        }
         return data;
       };
       $httpProvider.defaults.transformRequest.push(spinnerFunction);
   })
   // register the interceptor as a service, intercepts ALL angular ajax http calls
-  .factory('httpSpinnerInterceptor', function ($q, $window) {
+  .factory('httpSpinnerInterceptor', function ($q, $rootScope) {
       return function (promise) {
+          $rootScope.polling = true;
+          $rootScope.networkError = false;
           return promise.then(function (response) {
-              var el;
-              if(el = document.getElementById('loading')) {
-                el.style.display = 'none'; // hide
-              }
-              return response;
+            $rootScope.polling = false;
+            return response;
           }, function (response) {
-              var el;
-              if(el = document.getElementById('loading')) {
-                el.style.display = 'none'; // hide
-              }
-              return $q.reject(response);
+            $rootScope.polling = false;
+            $rootScope.networkError = true;
+            return $q.reject(response);
           });
       };
   })
+

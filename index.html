@@ -9,35 +9,38 @@
     <link rel="stylesheet" type="text/css" href="css/app.css">
   </head>
   <body>
-    <div id='loading' style='display: none;'>
-        Loading
-      </div>
-        <div ng-controller='rssController'>
-          <ul class='rss-urls'>
-            <form ng-submit='create()'>
-              <input ng-model='rssUrl' placeholder='e.g. http://digg.com/rss/top.rss' type='text'>
-              <input type='submit' value='Add'>
-            </form>
-          <li class='rss-url' ng-repeat='rssUrl in rssUrls'>
-            <a href='javascript:void(0);' ng-click='destroy($index)'>remove</a>
-            &middot;
-            {{rssUrl}}
-          </li>
-        </ul>
-        <ul class='rss-entries'>
-          <li class='rss-entry' ng-repeat='rssEntry in rssEntries'>
-            <h2 class='title'>
-              <a href='{{rssEntry.link}}' target='_blank'>{{rssEntry.title}}</a>
-            </h2>
-            &middot;
-            <i class='published-date'>{{rssEntry.publishedDate | date:'medium' }}</i>
-            &middot;
-            <div class='body'>
-              {{rssEntry.contentSnippet}}
-            </div>
-          </li>
-        </ul>
-      </div>
+    <div id="polling" ng-show="polling">
+      Loading
+    </div>
+    <div id="network-error" ng-show="networkError">
+      No Network
+    </div>
+      <div ng-controller='rssController'>
+        <ul class='rss-urls'>
+          <form ng-submit='create()'>
+            <input ng-model='rssUrl' placeholder='e.g. http://digg.com/rss/top.rss' type='text'>
+            <input type='submit' value='Add'>
+          </form>
+        <li class='rss-url' ng-repeat='rssUrl in rssUrls'>
+          <a href='javascript:void(0);' ng-click='destroy($index)'>remove</a>
+          &middot;
+          {{rssUrl}}
+        </li>
+      </ul>
+      <ul class='rss-entries'>
+        <li class='rss-entry' ng-repeat='rssEntry in rssEntries'>
+          <h2 class='title'>
+            <a href='{{rssEntry.link}}' target='_blank'>{{rssEntry.title}}</a>
+          </h2>
+          &middot;
+          <i class='published-date'>{{rssEntry.publishedDate | date:'medium' }}</i>
+          &middot;
+          <div class='body'>
+            {{rssEntry.contentSnippet}}
+          </div>
+        </li>
+      </ul>
+    </div>
     <script src="components/angular/angular.js"></script>
     <script src="js/ext/array.js"></script>
     <script src="js/interceptors/httpSpinner.js"></script>

@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-#loading {
+#polling, #network-error {
   z-index: 999;
   background-color: #F00;
   color: #FFF;
@@ -10,6 +10,7 @@
   top: 0;
   padding: 5px 10px;
 }
+
 body { margin: 1em; background-image: url("img/background.jpg"); }
 body, input, textarea, a {
   color: #555;
