@@ -28,6 +28,9 @@ rssReader.controller('rssController', function rssController($scope, $http, $tim
             // add entries with unique link.
             $scope.rssEntries.pushUniqueBy(rssEntries[n], function(a, b) { return a.link === b.link; });
           }
+
+          // sort
+          $scope.rssEntries = $scope.rssEntries.sort(function(a, b){return a.publishedDate-publishedDate});
         } else {
           alert(data.responseDetails);
         };
