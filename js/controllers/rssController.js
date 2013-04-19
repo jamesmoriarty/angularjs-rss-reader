@@ -30,7 +30,7 @@ rssReader.controller('rssController', function rssController($scope, $http, $tim
           }
 
           // sort
-          $scope.rssEntries = $scope.rssEntries.sort(function(a, b) { return a.publishedDate - b.publishedDate });
+          $scope.rssEntries = $scope.rssEntries.sort(function(a, b) { return -(a.publishedDate - b.publishedDate) });
         } else {
           alert(data.responseDetails);
         };
