@@ -12,3 +12,7 @@ features
 - timeout
 - local storage
 - responsive
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/jamesmoriarty/angularjs-rss-reader/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
