@@ -1,9 +1,7 @@
 angular-js-rss-reader
 =====================
 
-Small code base, interceptors, services, and responsive.
-
-[demo](http://jamesmoriarty.github.io/angularjs-rss-reader/index.html)
+Small code base, interceptors, services, and responsive. [Demo](http://jamesmoriarty.github.io/angularjs-rss-reader/index.html).
 
 ![img](https://raw.github.com/jamesmoriarty/angularjs-rss-reader/master/doc/screenshot-01.gif)
 
